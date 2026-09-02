@@ -1,0 +1,310 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.header {
+    display: flex;
+    width: 100%;
+    height: 80px;
+    align-items: center;
+    padding: 32px;
+    border-bottom: 1px solid grey;
+    justify-content: space-between;
+    align-items: center;
+
+
+    .headerBtnWrapper {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        .btns {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            .avatarImg{
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: lightgreen;
+                color: green;
+            }
+        }
+    }
+
+    .logo {
+        width: 200px;
+        height: 100px;
+    }
+
+    input {
+        font-size: 18px;
+        margin-left: 120px;
+        border: none;
+        height: 50px;
+        width: 400px;
+        padding: 8px 16px;
+        outline: none;
+        border-radius: 40px;
+        box-shadow: 0 0 10px grey;
+        position: relative;
+    }
+
+    .searchBtn {
+        position: absolute;
+        left: 1175px;
+        padding: 5px 8px;
+        border-radius: 100px;
+        border: none;
+        color: aliceblue;
+        background-color: red;
+        font-size: 20px;
+        font-weight: 600;
+    }
+}
+
+
+
+.listingSection {
+    max-width: 1350px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 100px;
+
+    .arrowIcon {
+        font-size: 20px;
+    }
+
+    .loadingWrapper {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        color: aliceblue;
+        background-color: rgba(0, 0, 0, 0.567);
+    }
+
+
+
+}
+
+
+.card {
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 181px;
+    height: 214px;
+    align-items: center;
+    position: relative;
+    margin-top: 20px;
+
+
+    .favoriteBtn {
+        top: 10px;
+        left: 130px;
+        position: absolute;
+    }
+}
+
+/* .inspirationWrapper {
+    width: 100%;
+    height: 419px;
+    padding: 48px 48px;
+
+    .InspirationComponents {
+        margin-top: 50px;
+
+        p {
+            color: grey;
+        }
+    }
+
+    .inspirationMenuWrapper {
+        display: flex;
+        gap: 30px;
+        color: grey;
+
+        span:hover {
+            color: black;
+        }
+
+    }
+} */
+
+.footerWrapper {
+    margin-top: 30px;
+    width: 100%;
+    height: 619px;
+    padding: 50px 48px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(244, 241, 237);
+
+    .footerBox {
+        line-height: 25px;
+        width: 506px;
+        height: 414px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        a:hover {
+            width: fit-content;
+            border-bottom: 1px solid black;
+        }
+    }
+
+    .footer {
+
+        display: flex;
+        flex-direction: row;
+    }
+
+    .footerBottom {
+        width: 100%;
+
+        height: 300px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        a:hover {
+            width: fit-content;
+            border-bottom: 1px solid black;
+        }
+
+        .footerBottomRight {
+            display: flex;
+            gap: 15px;
+        }
+    }
+}
+
+
+
+.infoWrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+
+
+    img {
+        width: 722px;
+        height: 385px;
+        border-radius: 10px;
+    }
+
+    h3 {
+        margin: 20px 0px 10px 0px;
+    }
+
+    .starIcon {
+        font-size: 15px;
+    }
+
+
+
+    .Form {
+        margin-left: 400px;
+        width: 400px;
+        border: 1px solid black;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        border-radius: 25px;
+        align-items: center;
+
+        Button {
+            margin-top: 30px;
+            border-radius: 30px;
+            width: 340px;
+            padding: 10px 0px 10px 0px;
+        }
+
+        .guestsInput {
+            width: 340px;
+            border: 1px solid black;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            padding: 10px;
+
+            input {
+                border: none;
+                outline: none;
+                width: 300px;
+                padding: 8px;
+            }
+
+        }
+
+        .formHeader {
+            display: flex;
+
+            .checkIn {
+                border-top-left-radius: 20px;
+                padding: 10px;
+                border: 1px solid black;
+
+                input {
+                    border: none;
+                    outline: none;
+                    font-size: 18px;
+                }
+            }
+
+            .checkOut {
+                border-top-right-radius: 20px;
+                padding: 10px;
+                border: 1px solid black;
+
+                input {
+                    border: none;
+                    outline: none;
+                    font-size: 18px;
+                }
+            }
+        }
+
+
+
+    }
+
+
+    .infoHeader {
+        margin: 20px 0px 20px 0px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        div {
+            gap: 10px;
+            display: flex;
+
+            p {
+                border-bottom: 1px solid black;
+            }
+        }
+    }
+}
