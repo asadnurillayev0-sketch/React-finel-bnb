@@ -5,26 +5,27 @@ import { Navigate, Route, Routes } from "react-router"
 import SignUp from "./SignUp"
 import { ToastContainer } from "react-toastify"
 import { graphqlClient } from "./graph-client"
-
 import ListInfo from "./ListsInfo"
-import FaqatKirmagan from "./FaqatKirmagan"
-import FaqatKirgan from "./FaqatKirgan"
-import FaqatAdmin from "./FaqatAdmin"
 import LoginPage from "./LoginPage"
-import AdminPage from "./AdminPage"
+
 import FavoritesPage from "./FavoritesPage"
 import BookingsPage from "./BookingsPage"
+import Home from "./Homepage"
+
+import AdminPage from "./AdminPage"
+import AdminLogin from "./AdminPageLogin"
+
+
 function App() {
 
   return (
     <>
- 
+
       <ApolloProvider client={graphqlClient}>
         <ToastContainer />
         <Routes>
-          <Route path="/" element={<Listings />} />
-  
-     
+          <Route path="/" element={<Home/>} />
+          <Route path="/listings" element={<Listings />} />
           <Route path="/listingsInfo/:id" element={<ListInfo />} />
 
 
@@ -34,7 +35,8 @@ function App() {
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/bookings" element={<BookingsPage />} />
 
-          <Route path="/admin" element={<FaqatAdmin><AdminPage /></FaqatAdmin>} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
         </Routes>
       </ApolloProvider>
 

@@ -1,117 +1,141 @@
 import { gql } from "@apollo/client";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { useState } from "react";
-import { IconButton, Typography, Button } from "@mui/material"
+import { Grid, IconButton, Pagination, Typography } from "@mui/material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-
-import { Link } from "react-router";
-
-
-
+import FavoriteIcon from '@mui/icons-material/Favorite'; // <-- 1. Izohdan chiqarildi
+import { Link } from "react-router"; // yoki "react-router-dom"
 import Footer from "./FooterSection";
 import Header from "./Header";
-
-const Listings = () => {
-
-    const [page, setPage] = useState(1)
-    const [search, setSearch] = useState("")
-
-
-    const addQuery = gql`
-     mutation addFavorites($listingId: ID!) {
-       addFavorite(listingId: $listingId) {
-      id
+import { Atom } from "react-loading-indicators";
+const AddQuery = gql`
+    mutation AddFavorite($listingId: ID!) {
+        addFavorite(listingId: $listingId) {
+            id
+            title
+            rating
+            address
+            pricePerNight
+            images
+        }
     }
-  }
 `;
 
-    const Listing = gql`
-         query Listing($limit:Int, $page:Int, $search: String) {
-         listings(limit: $limit,page: $page, search: $search ){
-            items{
+const ListingQuery = gql`
+    query Listings($category: ListingCategory, $search: String, $minPrice: Int, $maxPrice: Int,$limit: Int, $page: Int) {
+listings(category: $category, search: $search, minPrice: $minPrice, maxPrice: $maxPrice, page: $page, limit: $limit) {
+            items {
                 id
                 title
                 pricePerNight
                 images
                 rating
-               
-                
             }
-                pagination{
-                 totalPages
-                
-                }
-         } 
+            pagination {
+                totalPages
+            }
+        } 
+    }
+`;
+
+const Listings = () => {
+    const [page, setPage] = useState(1);
+
+    const [search, setSearch] = useState("")
+    const [category, setCategory] = useState(null)
+
+    console.log(category);
+    
+    const [maxPrice, setMaxPrice] = useState(null)
+    const [minPrice, setMinPrice] = useState()
+
+
+    const [favorites, setFavorites] = useState([]);
+
+    const { data, loading, error } = useQuery(ListingQuery, {
+        variables: {
+            limit: 20, page: page, search: search, category: category,
+            maxPrice: Number(maxPrice)||null, minPrice: Number(minPrice)
         }
-    `;
-    const { data, loading, error, refetch } = useQuery(Listing, {
-        variables: { limit: 20, page, search: search }
-    })
+    });
 
-    console.log(data?.listings?.pagination);
-    const totalPages = data?.listings?.pagination?.totalPages
+    const [addFavorite] = useMutation(AddQuery);
 
-    const [addFavorite] = useMutation(addQuery);
-    const [favorite, setFavorite] = useState(false)
+    const totalPages = data?.listings?.pagination?.totalPages || 1;
+
+
+    const handleFavoriteClick = (id) => {
+        setFavorites(prevFavorites =>
+            prevFavorites.includes(id)
+                ? prevFavorites.filter(item => item !== id)
+                : [...prevFavorites, id]
+        );
+    };
+
+
     return (
         <>
+            <Header search={search} setSearch={setSearch}  category={category} 
+            setCategory={setCategory} maxPrice={maxPrice}   setMaxPrice={setMaxPrice} 
+             minPrice={minPrice}  setMinPrice={setMinPrice}/>
 
-
-
-            <Header />
-
-            <div className="listingSection">
-
-                {/* <p>Popular homes in Dubai</p>
-                <span className="arrowIcon"><ion-icon name="arrow-forward-outline"></ion-icon></span> */}
+            <Grid sx={{ xs: { maxWidth: "400px" } }} container spacing={1} className="listingSection">
                 {error && <p style={{ color: "red" }}>{error.message}</p>}
-                {loading && <div className="loadingWrapper"> <h2>Loading...</h2></div>}
+                {loading && <div className="loadingWrapper">
+                    <Atom color="#cc3131" size="large" text="" textColor="" />
+                </div>}
 
                 {data?.listings?.items?.map((item) => (
-
-                    <div className="card" key={item.id}>
-
-                        <IconButton className="favoriteBtn" onClick={() => {
-                            addFavorite({ variables: { listingId: item.id } });
-                            setFavorite(prev => !prev);
-                        }}
-
+                    <Grid className="card" key={item.id}>
+                        <small className="guestFavoriteText">Guest favorite</small>
+                        <IconButton
+                            className="favoriteBtn"
+                            onClick={() => {
+                                handleFavoriteClick(item.id);
+                                addFavorite({ variables: { listingId: item.id } });
+                            }}
                         >
-                            {favorite ? (
+
+                            {favorites.includes(item.id) ? (
                                 <FavoriteIcon color="error" />
                             ) : (
-                                <FavoriteBorderIcon />
+                                <FavoriteBorderIcon color="error" />
                             )}
                         </IconButton>
 
-
                         <Link style={{ textDecoration: "none" }} to={`/listingsInfo/${item.id}`}>
-                            <img style={{ width: "181px", height: "181px", borderRadius: "30px" }}
-                                src={item.images} alt="" />
+                            <img
+
+                                src={item.images}
+
+                            />
                         </Link>
 
-                        <small style={{ fontSize: "13px", width: "100%", color: "black" }}>{item.title}</small><br />
-                        <small style={{ color: "grey" }}>${item.pricePerNight} for 2 night
-                            <ion-icon name="star"></ion-icon> {item.rating}</small>
-                    </div>
-
+                        <Typography variant="subtitle1" >
+                            {item.title.slice(0, 18)}
+                        </Typography><br />
+                        <Typography variant="caption" style={{ color: "grey", }}>
+                            ${item.pricePerNight} for 2 night
+                            <ion-icon name="star"></ion-icon> {item.rating}
+                        </Typography>
+                    </ Grid>
                 ))}
+            </Grid><br /><br /><br />
 
 
-            </div >
+            <div className="paginationWrapper">
+                <Pagination
 
-            {
-                new Array(totalPages).fill("").map((_, index) => (
-                    <button onClick={() => setPage(index + 1)}>{index + 1}</button>
-                ))
-            }
-
-
-            < Footer />
+                    page={page}
+                    count={totalPages}
+                    showFirstButton
+                    showLastButton
+                    onChange={(event, value) => setPage(value)}
+                />
+            </div>
+            <Footer />
         </>
+    );
+};
 
-    )
-}
-
-export default Listings
+export default Listings;

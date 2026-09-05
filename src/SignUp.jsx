@@ -39,11 +39,12 @@ const SignUp = () => {
 
     const handleRegisterCompleted = (data) => {
 
+        console.log(data?.user);
 
         setAccesToken(data?.register.accessToken);
         setUser(data?.register?.user);
         toast.success("Registered succesfully!");
-        navigate(-1)
+        navigate("/listings")
     }
 
     const handleSignUp = (values) => {
@@ -143,7 +144,7 @@ const SignUp = () => {
                             onClick={handleSubmit(handleSignUp)}>Sign Up
                         </Button>
 
-                        <p style={{marginLeft: "180px"}}>Already you have Account ?  <Link to="/login">Sign In</Link></p>
+                        <p >Already you have Account ?  <Link to="/login"> In</Link></p>
                     </Stack>
                 </Paper>
             </Container>

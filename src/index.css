@@ -7,10 +7,11 @@
 
 .header {
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
-    height: 80px;
+    min-height: 80px;
     align-items: center;
-    padding: 32px;
+    padding: 16px 32px;
     border-bottom: 1px solid grey;
     justify-content: space-between;
     align-items: center;
@@ -26,7 +27,7 @@
             align-items: center;
             gap: 20px;
 
-            .avatarImg{
+            .avatarImg {
                 width: 40px;
                 height: 40px;
                 border-radius: 50%;
@@ -37,6 +38,13 @@
                 color: green;
             }
         }
+
+
+        .signBtnWrapper {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
     }
 
     .logo {
@@ -44,78 +52,119 @@
         height: 100px;
     }
 
-    input {
-        font-size: 18px;
-        margin-left: 120px;
-        border: none;
-        height: 50px;
-        width: 400px;
-        padding: 8px 16px;
-        outline: none;
-        border-radius: 40px;
-        box-shadow: 0 0 10px grey;
-        position: relative;
-    }
 
-    .searchBtn {
-        position: absolute;
-        left: 1175px;
-        padding: 5px 8px;
-        border-radius: 100px;
-        border: none;
-        color: aliceblue;
-        background-color: red;
-        font-size: 20px;
-        font-weight: 600;
+    .searchWrapper {
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        position: relative;
+
+        input {
+            font-size: 18px;
+            border: none;
+            height: 50px;
+            width: 400px;
+            padding: 8px 16px;
+            outline: none;
+            border-radius: 40px;
+            box-shadow: 0 0 10px grey;
+
+        }
+
+        .searchBtn {
+            position: absolute;
+            left: 355px;
+            padding: 7px 10px;
+            border-radius: 100px;
+            border: none;
+            color: aliceblue;
+            background-color: red;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
     }
 }
 
 
 
+
 .listingSection {
-    max-width: 1350px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 100px;
+    margin-top: 30px;
+    padding-left: 70px;
 
     .arrowIcon {
         font-size: 20px;
     }
 
-    .loadingWrapper {
-        top: 0;
-        left: 0;
+}
+
+
+.paginationWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.loadingWrapper {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    color: aliceblue;
+    background-color: rgba(0, 0, 0, 0.567);
+}
+
+.card {
+    /* width: 100%; */
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 210px;
+    align-items: center;
+    position: relative;
+    line-height: 5px;
+
+
+
+    img {
         width: 100%;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: fixed;
-        color: aliceblue;
-        background-color: rgba(0, 0, 0, 0.567);
+        max-width: 100%;
+        height: 200px;
+        border-radius: 30px;
+    }
+
+    .removeFavoriteIcon {
+        position: absolute;
+        top: 10px;
+        left: 70px;
+        font-size: 30px;
+
+
     }
 
 
 
-}
-
-
-.card {
-    flex-direction: column;
-    flex-wrap: wrap;
-    width: 181px;
-    height: 214px;
-    align-items: center;
-    position: relative;
-    margin-top: 20px;
-
-
     .favoriteBtn {
-        top: 10px;
-        left: 130px;
         position: absolute;
+        top: 10px;
+        right: 10px;
+
+    }
+
+    .guestFavoriteText {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: aliceblue;
+        width: fit-content;
+        padding: 10px;
+        border-radius: 20px;
     }
 }
 
@@ -151,11 +200,11 @@
     padding: 50px 48px;
     display: flex;
     flex-direction: column;
-    background-color: rgb(244, 241, 237);
+    /* background-color: rgb(244, 241, 237); */
 
     .footerBox {
         line-height: 25px;
-        width: 506px;
+        width: 200px;
         height: 414px;
         display: flex;
         flex-direction: column;
@@ -174,6 +223,8 @@
 
     .footer {
 
+
+        justify-content: space-around;
         display: flex;
         flex-direction: row;
     }
@@ -228,7 +279,7 @@
 
     .Form {
         margin-left: 400px;
-        width: 400px;
+        width: 460px;
         border: 1px solid black;
         display: flex;
         flex-direction: column;
@@ -239,18 +290,18 @@
         Button {
             margin-top: 30px;
             border-radius: 30px;
-            width: 340px;
+            width: 400px;
             padding: 10px 0px 10px 0px;
         }
 
         .guestsInput {
-            width: 340px;
+            width: 420px;
             border: 1px solid black;
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
             padding: 10px;
 
-            input {
+            Textfield {
                 border: none;
                 outline: none;
                 width: 300px;
@@ -307,4 +358,296 @@
             }
         }
     }
+}
+
+
+
+
+
+.bookingsWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    div {
+        padding: 20px;
+        margin-top: 50px;
+        width: 380px;
+        height: 570px;
+        border-radius: 40px;
+        box-shadow: 0 0 5px grey;
+        line-height: 25px;
+
+        img {
+            border-radius: 20px;
+            width: 100%;
+            height: auto;
+        }
+
+        Button {
+            margin-top: auto;
+        }
+    }
+}
+
+
+
+.homeHeader {
+    box-shadow: 0 0 10px grey;
+    padding: 30px 40px;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .homeLogo {
+        width: 200px;
+        height: 100px;
+    }
+
+}
+
+.homeCardWrapper {
+    margin-top: 30px;
+    max-width: 1200px;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    gap: 20px;
+    display: flex;
+}
+
+
+
+
+
+.adminPageHeader {
+    display: flex;
+    width: 100%;
+    height: 80px;
+    padding: 16px 32px;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 10px grey;
+
+    img {
+        width: 200px;
+        height: 100px;
+    }
+}
+
+
+.modalWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.401);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 111;
+
+    .modal {
+        width: 500px;
+        margin-top: -300px;
+
+        .twoInputWrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    }
+}
+
+
+
+.filterWrapper {
+    gap: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .categoryFilter {
+        width: 300px;
+    }
+
+    .PriceFilterInput {
+        width: 200px;
+    }
+}
+
+
+
+.loginWrapper {
+
+    text-align: center;
+}
+
+@media (max-width: 1043px) {
+    .filterWrapper {
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 943px) {
+    .searchWrapper {
+        input {
+            width: 350px;
+        }
+
+        .searchBtn {
+            left: 305px;
+        }
+
+    }
+
+
+}
+
+
+
+
+
+
+
+@media (max-width: 729px) {
+
+
+    .header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .searchWrapper {
+        input {
+
+            width: 100%;
+        }
+
+        .searchBtn {
+            left: 355px;
+        }
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .headerBtnWrapper {
+        margin-top: 20px;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+
+
+
+}
+
+
+@media (max-width: 642px) {
+    .listingSection {
+        padding: 30px;
+    }
+
+    .card {
+
+        width: 100%;
+
+        img {
+            height: 370px;
+        }
+    }
+
+}
+
+
+
+@media (max-width: 475px) {
+    .searchWrapper {
+        width: 300px;
+
+        input {
+            width: 300px;
+        }
+
+        .searchBtn {
+            display: none;
+        }
+
+    }
+}
+
+@media (max-width: 420px) {
+    .listingSection {
+        padding: 30px;
+    }
+
+    .card {
+
+        width: 100%;
+
+        img {
+            height: 300px;
+        }
+    }
+}
+
+@media (max-width: 390px) {
+
+
+
+    .avatarImg {
+        width: 35px;
+        height: 35px;
+        font-size: 12px;
+    }
+
+    .logo {
+        width: 180px;
+        height: 80px;
+    }
+
+    .searchWrapper {
+        width: 300px;
+
+        input {
+            width: 280px;
+        }
+    }
+
+    .btns {
+        Button {
+            width: 50px;
+            font-size: 10px;
+            padding: 5px 20px 5px 20px;
+        }
+    }
+
+
+}
+
+@media (max-width: 352px) {
+
+    .listingSection {
+        padding: 30px;
+    }
+
+    .card {
+
+        width: 90%;
+
+        img {
+            height: 200px;
+        }
+    }
+
 }

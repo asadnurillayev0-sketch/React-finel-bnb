@@ -8,8 +8,9 @@ import { useLogin } from "./useLogin"
 import { useNavigate } from "react-router"
 
 import { Link } from "react-router"
+import { useAuth } from "./UseAuth"
 
-const Login_MUTATION = gql`
+const AdminLogin_MUTATION = gql`
         mutation login($email:String!, $password:String!){
             login(email: $email, password: $password){
                 accessToken
@@ -22,16 +23,17 @@ const Login_MUTATION = gql`
         
     `
 
-const LoginPage = () => {
+const AdminLogin = () => {
     const navigate = useNavigate()
-    const { setAccesToken, setUser } = useLogin()
+    const { setAccesToken, setUser } = useAuth()
 
 
     const { control, handleSubmit } = useForm({
-        defaultValues: { name: "", password: "", email: "" }
+        defaultValues: {  password: "", email: "" }
     })
 
-    const [register, { data, loading }] = useMutation(Login_MUTATION, { onCompleted: () => { setAccesToken(data.accessToken); navigate("/") } })
+    const [register, { data, loading }] = useMutation(AdminLogin_MUTATION,
+         { onCompleted: () => { setAccesToken(data.accessToken); navigate("/admin") } })
 
 
 
@@ -39,13 +41,12 @@ const LoginPage = () => {
     const handleLoginCompleted = (data) => {
         setAccesToken(data?.login?.accessToken);
         setUser(data?.user);
-        toast.success("Login succesfully!");
-        navigate("/listings")
+        toast.success("Admin Login succesfully!");
+        navigate("/admin")
     }
 
-    const handleLoginPage = (values) => {
+    const handleAdminLoginPage = (values) => {
         console.log(values);
-
         register({
             variables: values,
             onCompleted: handleLoginCompleted,
@@ -55,9 +56,9 @@ const LoginPage = () => {
     return (
         <>
             <Container maxWidth="sm">
-                <Paper className="loginWrapper" elevation={20} style={{ padding: 20, marginTop: 300 }}>
+                <Paper elevation={20} style={{ padding: 20, marginTop: 300 }}>
                     <Stack spacing={3}>
-                        <Typography variant="h3" >Login</Typography>
+                        <Typography variant="h3" style={{ marginLeft: "180px" }}>Log In</Typography>
 
 
 
@@ -114,13 +115,10 @@ const LoginPage = () => {
                         />
 
 
-                        <Button variant="contained" color="error" loading={loading}
-                            onClick={handleSubmit(handleLoginPage)}>Kirish
+                        <Button variant="contained" loading={loading}
+                            onClick={handleSubmit(handleAdminLoginPage)}>Admin sifatida kirish
                         </Button>
 
-                        <p >Don't have an account? <Link to="/register" style={{ textDecoration: "none",color:"red" }}>
-                            Sign Up
-                        </Link></p>
                     </Stack>
                 </Paper>
             </Container>
@@ -128,4 +126,4 @@ const LoginPage = () => {
     )
 }
 
-export default LoginPage
+export default AdminLogin

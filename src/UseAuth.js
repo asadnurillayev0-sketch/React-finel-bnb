@@ -9,7 +9,7 @@ export const useAuth = create()(
             setAccesToken: (token) =>
                 set((state) => ({ ...state, accesToken: token })),
             setUser: (user) => set((state) => ({ ...state, user })),
-            logOut: () => set(  ({accesToken: null, user:null}))
+            
         })
     ),
         { name: 'auth' }

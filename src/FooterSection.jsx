@@ -1,10 +1,11 @@
+import { Grid } from "@mui/material"
 
 const Footer = () => {
     return (
         <>
-            <div className="footerWrapper">
-                <div className="footer">
-                    <div className="footerBox">
+            <Grid  className="footerWrapper">
+                <Grid container spacing={3} className="footer">
+                    <Grid size={1} className="footerBox">
                         <h4>Support</h4>
                         <a href="#">Help Center</a>
                         <a href="#">Get help with a safety issue</a>
@@ -14,8 +15,8 @@ const Footer = () => {
                         <a href="#">Disability support</a>
                         <a href="#">Cancellation options</a>
                         <a href="#">Report neighborhood concern</a>
-                    </div>
-                    <div className="footerBox">
+                    </Grid>
+                    <Grid size={1} className="footerBox">
                         <h4>Hosting</h4>
                         <a href="#">Airbnb your home</a>
                         <a href="#">Airbnb your experience</a>
@@ -29,8 +30,8 @@ const Footer = () => {
                         <a href="#">Join a free hosting class</a>
                         <a href="#">Find a co‑host</a>
                         <a href="#">Refer a host</a>
-                    </div>
-                    <div className="footerBox">
+                    </Grid>
+                    <Grid size={1} className="footerBox">
                         <h4>Airbnb</h4>
                         <a href="#">2026 Summer Release</a>
                         <a href="#">Newsroom</a>
@@ -38,19 +39,19 @@ const Footer = () => {
                         <a href="#">Investors</a>
                         <a href="#">Gift cards</a>
                         <a href="#">Airbnb.org emergency stays</a>
-                    </div>
-                </div><br /><br /><br />
+                    </Grid>
+                </Grid><br /><br /><br />
                 <hr />
-                <div className="footerBottom">
-                    <div><span>© 2026 Airbnb, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Your  Privacy  Choices</a></span></div>
-                    <div className="footerBottomRight"><span><span><ion-icon name="globe-outline"></ion-icon></span> English (US) $ USD </span>
+                <Grid container spacing={2} className="footerBottom">
+                    <Grid ><span>© 2026 Airbnb, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Your  Privacy  Choices</a></span></Grid>
+                    <Grid  className="footerBottomRight"><span><span><ion-icon name="globe-outline"></ion-icon></span> English (US) $ USD </span>
                         <span>  <ion-icon name="logo-facebook"></ion-icon></span>
                         <span>  <ion-icon name="logo-x"></ion-icon></span>
                         <span>  <ion-icon name="logo-instagram"></ion-icon></span>
 
-                    </div>
-                </div>
-            </div>
+                    </Grid>
+                </Grid>
+            </Grid>
         </>
     )
 }
