@@ -45,6 +45,7 @@ const BookingsPage = () => {
     console.log(data?.listing)
     return (
         <>
+        
             <Header />
             <div className="bookingsWrapper">
                 {data?.bookings?.map((item) => (
@@ -61,8 +62,9 @@ const BookingsPage = () => {
                         <p><b style={{ fontSize: "18px" }}>State:</b> {item.status}</p><br />
                         <Button style={{ marginTop: "auto" }} color="error"
                          variant="contained" onClick={() => {
+                            refetch() 
                             removeBookingBtn({ variables: { bookingId: item.id } });
-                           refetch()
+                           
                         }}>Cancel
                         </Button>
                     </div>

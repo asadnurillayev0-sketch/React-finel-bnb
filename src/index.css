@@ -142,7 +142,7 @@
     .removeFavoriteIcon {
         position: absolute;
         top: 10px;
-        left: 70px;
+        right: 10px;
         font-size: 30px;
 
 
@@ -151,6 +151,8 @@
 
 
     .favoriteBtn {
+        color: black;
+        font-size: 20px;
         position: absolute;
         top: 10px;
         right: 10px;
@@ -168,30 +170,7 @@
     }
 }
 
-/* .inspirationWrapper {
-    width: 100%;
-    height: 419px;
-    padding: 48px 48px;
 
-    .InspirationComponents {
-        margin-top: 50px;
-
-        p {
-            color: grey;
-        }
-    }
-
-    .inspirationMenuWrapper {
-        display: flex;
-        gap: 30px;
-        color: grey;
-
-        span:hover {
-            color: black;
-        }
-
-    }
-} */
 
 .footerWrapper {
     margin-top: 30px;
@@ -262,7 +241,8 @@
 
 
     img {
-        width: 722px;
+        width: 100%;
+        max-width: 722px;
         height: 385px;
         border-radius: 10px;
     }
@@ -275,11 +255,27 @@
         font-size: 15px;
     }
 
+    .share {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+    }
 
+
+    .statusWrapper {
+        width: 100%;
+        max-width: 700px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+    }
 
     .Form {
-        margin-left: 400px;
-        width: 460px;
+        margin-top: 30px;
+        width: 100%;
+        max-width: 460px;
         border: 1px solid black;
         display: flex;
         flex-direction: column;
@@ -290,12 +286,14 @@
         Button {
             margin-top: 30px;
             border-radius: 30px;
-            width: 400px;
+            width: 100%;
+            max-width: 400px;
             padding: 10px 0px 10px 0px;
         }
 
         .guestsInput {
-            width: 420px;
+            width: 100%;
+            max-width: 420px;
             border: 1px solid black;
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
@@ -312,13 +310,19 @@
 
         .formHeader {
             display: flex;
+            width: 100%;
+            max-width: 440px;
 
             .checkIn {
+                max-width: 220px;
+                width: 100%;
                 border-top-left-radius: 20px;
                 padding: 10px;
                 border: 1px solid black;
 
                 input {
+                    max-width: 230px;
+                    width: 100%;
                     border: none;
                     outline: none;
                     font-size: 18px;
@@ -326,11 +330,15 @@
             }
 
             .checkOut {
+                max-width: 220px;
+                width: 100%;
                 border-top-right-radius: 20px;
                 padding: 10px;
                 border: 1px solid black;
 
                 input {
+                    max-width: 180px;
+                    width: 100%;
                     border: none;
                     outline: none;
                     font-size: 18px;
@@ -358,6 +366,13 @@
             }
         }
     }
+
+    .listingDescription {
+        width: 100%;
+        max-width: 400px;
+
+    }
+
 }
 
 
@@ -385,7 +400,7 @@
         img {
             border-radius: 20px;
             width: 100%;
-            height: auto;
+            height: 250px;
         }
 
         Button {
@@ -455,6 +470,9 @@
     .modal {
         width: 500px;
         margin-top: -300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
         .twoInputWrapper {
             display: flex;
@@ -467,25 +485,26 @@
 
 
 .filterWrapper {
-    gap: 20px;
+    gap: 10px;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    .categoryFilter {
-        width: 300px;
-    }
+
 
     .PriceFilterInput {
-        width: 200px;
+        max-width: 200px;
+        width: 100%;
     }
 }
 
-
+.categoryFilter {
+    max-width: 300px;
+    width: 100%;
+}
 
 .loginWrapper {
-
     text-align: center;
 }
 
@@ -550,8 +569,56 @@
 
 
 
+    .infoWrapper {
+
+
+        text-align: center;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+
+        .share {
+            span {
+                display: none;
+            }
+        }
+
+        .FavoriteBtn {
+            p {
+                display: none;
+            }
+        }
+
+        img {
+            width: 100%;
+        }
+
+        .statusWrapper {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+        }
+
+        .listingDescription {
+            margin-left: 50px;
+        }
+    }
+
 }
 
+
+/* @media (max-width: 640px) {
+    .removeFavoriteIcon {
+        position: absolute;
+        top: 10px;
+        left: 80px;
+        font-size: 30px;
+
+
+    }
+} */
 
 @media (max-width: 642px) {
     .listingSection {
@@ -566,6 +633,9 @@
             height: 370px;
         }
     }
+
+
+
 
 }
 
@@ -583,7 +653,24 @@
             display: none;
         }
 
+
+
+
     }
+
+
+    /* .share {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+
+    .FavoriteBtn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    } */
 }
 
 @media (max-width: 420px) {

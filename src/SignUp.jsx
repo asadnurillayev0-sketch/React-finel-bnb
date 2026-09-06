@@ -59,9 +59,10 @@ const SignUp = () => {
     return (
         <>
             <Container maxWidth="sm">
-                <Paper elevation={20} style={{ padding: 20, marginTop: 300 }}>
+                <Paper elevation={20} style={{ padding: 20, marginTop: 300,
+                    textAlign:"center", color:"red" }}>
                     <Stack spacing={3}>
-                        <Typography variant="h3" style={{ marginLeft: "180px" }}>Sign Up</Typography>
+                        <Typography variant="h3" >Sign Up</Typography>
                         <Controller
                             name="name"
                             control={control}
@@ -140,11 +141,11 @@ const SignUp = () => {
                         />
 
 
-                        <Button variant="contained" loading={loading}
+                        <Button color="error" variant="contained" loading={loading}
                             onClick={handleSubmit(handleSignUp)}>Sign Up
                         </Button>
 
-                        <p >Already you have Account ?  <Link to="/login"> In</Link></p>
+                        <p >Already you have Account ?  <Link to="/login">Login</Link></p>
                     </Stack>
                 </Paper>
             </Container>

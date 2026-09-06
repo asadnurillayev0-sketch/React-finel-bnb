@@ -1,4 +1,4 @@
-import { Button } from "@mui/material"
+import { Button, Grid, IconButton, Typography } from "@mui/material"
 import { Link } from "react-router"
 import logo from './assets/Logo.svg';
 import { gql } from "@apollo/client";
@@ -14,7 +14,6 @@ const Home = () => {
     title
     images
     rating
-    isFavorite
     pricePerNight
   }
 }
@@ -34,20 +33,33 @@ const Home = () => {
                 {loading && <div className="loadingWrapper">
                     <Atom color="#cc3131" size="large" text="" textColor="" />
                 </div>}
-                {data?.featuredListings?.map((item) => (
-                    <div className="card" key={item.id}>
-                        <Link style={{ textDecoration: "none" }} to={`/listingsInfo/${item.id}`}>
-                            <img style={{ width: "181px", height: "181px", borderRadius: "30px" }}
-                                src={item.images} alt="" />
-                        </Link>
-                        <small style={{ fontSize: "13px", width: "100%", color: "black" }}>{item.title}</small><br />
-                        <small style={{ color: "grey" }}>${item.pricePerNight} for 2 night
-                            <ion-icon name="star"></ion-icon> {item.rating}
-                        </small>
+                
+                    <Grid sx={{ xs: { maxWidth: "400px" } }} container spacing={1} className="listingSection">
+                        {error && <p style={{ color: "red" }}>{error.message}</p>}
+                        {loading && <div className="loadingWrapper">
+                            <Atom color="#cc3131" size="large" text="" textColor="" />
+                        </div>}
 
-                    </div>
+                        {data?.featuredListings?.map((item) => (
+                            <Grid className="card" key={item.id}>
+                                <Link style={{ textDecoration: "none" }} to={`/listingsInfo/${item.id}`}>
+                                    <img src={item.images} />
+                                </Link>
 
-                ))}
+                                <Typography variant="subtitle1" >
+                                    {item.title.slice(0,18)}
+                                </Typography><br />
+                                <Typography variant="caption" style={{ color: "grey", }}>
+                                    ${item.pricePerNight} for 2 night
+                                    <ion-icon name="star"></ion-icon> {item.rating}
+                                </Typography>
+                                <Typography variant="subtitle2">
+                                    {item.adress}
+                                </Typography>
+                            </ Grid>
+                        ))}
+                    </Grid>
+               
             </div>
 
 

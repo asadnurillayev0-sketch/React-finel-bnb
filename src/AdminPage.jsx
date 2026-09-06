@@ -1,4 +1,14 @@
-import { Button, Container, FormControl, IconButton, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography, } from "@mui/material";
+import {
+    Button, Container,
+    FormControl, Grid,
+    IconButton,
+    InputLabel, MenuItem,
+    Paper, Select, Stack,
+    TextField, Typography,
+
+} from "@mui/material";
+
+
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import logo from './assets/Logo.svg';
 import Footer from "./FooterSection";
@@ -8,18 +18,16 @@ import { useMutation, useQuery } from "@apollo/client/react";
 import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
 import AdminLogin from "./AdminPageLogin";
-
+import { Atom } from "react-loading-indicators";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const AdminPage = () => {
 
     const [modalOpen, setModalOpen] = useState(false)
 
+    const [favorites, setFavorites] = useState([]);
 
 
-    //   const { accessToken, user } = useAuth();
-    //   if (!accessToken) return <Navigate to="/login" replace />;
-    //   if (user?.role !== "ADMIN") return <Navigate to="/" replace />;
-    //   return children;
 
 
 
@@ -91,7 +99,7 @@ const AdminPage = () => {
         defaultValues: {
             title: "", images: "", rating: "", beds: "", location: "",
             address: "", guests: "", amenities: "", pricePerNight: "", description: "",
-            category: "APARTMENT", bedrooms: "", bathrooms: "", isFeatured: false
+             bedrooms: "", bathrooms: "", isFeatured: false
         }
     })
 
@@ -115,7 +123,24 @@ const AdminPage = () => {
         console.log(data.isFeatured);
         refetch()
         setModalOpen(false)
+        console.log(data.category)
     }
+
+
+
+
+
+
+
+    const handleFavoriteClick = (id) => {
+        setFavorites(item =>
+            item.includes(id)
+                ? item.filter(item => item !== id)
+                : [...item, id]
+        );
+    };
+
+
     return (
         <>
 
@@ -182,6 +207,22 @@ const AdminPage = () => {
                                 <div className="twoInputWrapper">
                                     <Controller
                                         name="rating"
+
+                                        rules={{
+                                            required: {
+                                                value: true,
+                                                message: "Iltimos reyting kiriting",
+                                            },
+                                            max: {
+                                                value: 5,
+                                                message: "Reyting 5dan katta bolmasligi kerak"
+                                            },
+                                            min: {
+                                                value: 1,
+                                                message: "Reyting 1dan kam bolmasligi kerak"
+                                            }
+
+                                        }}
                                         control={control}
                                         render={({ field, fieldState: { error } }) => (
                                             <TextField
@@ -197,8 +238,16 @@ const AdminPage = () => {
                                             />
                                         )}
                                     />
+
+
                                     <Controller
                                         name="pricePerNight"
+                                        rules={{
+                                            required: {
+                                                value: true,
+                                                message: "Iltimos joy kiriting",
+                                            }
+                                        }}
                                         control={control}
                                         render={({ field, fieldState: { error } }) => (
                                             <TextField
@@ -221,6 +270,13 @@ const AdminPage = () => {
 
                                 <Controller
                                     name="location"
+
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: "Iltimos joy locatsiyasini kiriting",
+                                        }
+                                    }}
                                     control={control}
                                     render={({ field, fieldState: { error } }) => (
                                         <TextField
@@ -240,6 +296,12 @@ const AdminPage = () => {
 
                                 <Controller
                                     name="address"
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: "Iltimos joy manzilini kiriting",
+                                        }
+                                    }}
                                     control={control}
                                     render={({ field, fieldState: { error } }) => (
                                         <TextField
@@ -258,6 +320,12 @@ const AdminPage = () => {
                                 <div className="twoInputWrapper">
                                     <Controller
                                         name="beds"
+                                        rules={{
+                                            required: {
+                                                value: true,
+                                                message: "Iltimos yotoqlar sonini kiriting",
+                                            }
+                                        }}
                                         control={control}
                                         render={({ field, fieldState: { error } }) => (
                                             <TextField
@@ -276,6 +344,12 @@ const AdminPage = () => {
 
                                     <Controller
                                         name="guests"
+                                        rules={{
+                                            required: {
+                                                value: true,
+                                                message: "Iltimos mehmonlar sonini kiriting",
+                                            }
+                                        }}
                                         control={control}
                                         render={({ field, fieldState: { error } }) => (
                                             <TextField
@@ -295,6 +369,13 @@ const AdminPage = () => {
                                 <div className="twoInputWrapper">
                                     <Controller
                                         name="bathrooms"
+
+                                        rules={{
+                                            required: {
+                                                value: true,
+                                                message: "Iltimos yuvinish xonalari sonini kiriting",
+                                            }
+                                        }}
                                         control={control}
                                         render={({ field, fieldState: { error } }) => (
                                             <TextField
@@ -313,6 +394,12 @@ const AdminPage = () => {
 
                                     <Controller
                                         name="bedrooms"
+                                        rules={{
+                                            required: {
+                                                value: true,
+                                                message: "Iltimos yotoqxonalar sonini kiriting",
+                                            }
+                                        }}
                                         control={control}
                                         render={({ field, fieldState: { error } }) => (
                                             <TextField
@@ -336,6 +423,12 @@ const AdminPage = () => {
 
                                 <Controller
                                     name="amenities"
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: "Iltimos qulaylik turlarini kiriting",
+                                        }
+                                    }}
                                     control={control}
                                     render={({ field, fieldState: { error } }) => (
                                         <TextField
@@ -351,14 +444,23 @@ const AdminPage = () => {
                                         />
                                     )}
                                 />
-
+ <Controller
+                                    name="category"
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: "Iltimos kategoriya turlarini kiriting",
+                                        }
+                                    }}
+                                    control={control}
+                                    render={({ field, fieldState: { error } }) => (
 
                                 <FormControl >
                                     <InputLabel id="demo-simple-select-label">Category</InputLabel>
-                                    <Select
+                                    <Select 
+                                          {...field}
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
-                                        value={data?.category}
                                         label="category"
 
                                     >
@@ -370,11 +472,14 @@ const AdminPage = () => {
 
 
                                     </Select>
-                                </FormControl>
+                                </FormControl>)}
+                                />
 
 
                                 <Controller
                                     name="description"
+
+
                                     control={control}
                                     render={({ field, fieldState: { error } }) => (
                                         <TextField
@@ -383,7 +488,6 @@ const AdminPage = () => {
                                             {...field}
                                             size="small"
                                             fullWidth
-
                                             error={error}
                                             label="description"
                                             helperText={error && error.message}
@@ -395,15 +499,14 @@ const AdminPage = () => {
 
                                 <Controller
                                     name="isFeatured"
+
                                     control={control}
                                     render={({ field, fieldState: { error } }) => (
                                         <TextField
                                             type="checkbox"
-                                            placeholder="isFeatured"
+                                           
                                             {...field}
                                             size="small"
-                                            fullWidth
-
                                             error={error}
                                             label="isFeatured"
                                             helperText={error && error.message}
@@ -429,49 +532,59 @@ const AdminPage = () => {
             }
 
             <div className="adminPageHeader">
-               <Link to="/"><img src={logo} /></Link> 
+                <Link to="/"><img src={logo} /></Link>
                 <Button onClick={() => setModalOpen(true)} variant="contained" color="error">
                     Create Apartman
                 </Button>
             </div>
 
-            <div className="listingSection">
 
+
+
+
+
+
+            <Grid sx={{ xs: { maxWidth: "400px" } }} container spacing={1} className="listingSection">
                 {error && <p style={{ color: "red" }}>{error.message}</p>}
-                {loading && <div className="loadingWrapper"> <h2>Loading...</h2></div>}
+                {loading && <div className="loadingWrapper">
+                    <Atom color="#cc3131" size="large" text="" textColor="" />
+                </div>}
 
                 {data?.listings?.items?.map((item) => (
+                    <Grid className="card" key={item.id}>
 
-                    <div className="card" key={item.id}>
-                        <IconButton className="favoriteBtn" onClick={() => {
-                            addFavorite({ variables: { listingId: item.id } });
+                        <IconButton
 
-                        }}>
-                            <FavoriteBorderIcon />
-                            {/* {favorite ? (
+                            className="favoriteBtn"
+                            onClick={() => {
+                                handleFavoriteClick(item.id);
+                                addFavorite({ variables: { listingId: item.id } });
+                            }}
+                        >
+
+                            {favorites.includes(item.id) ? (
                                 <FavoriteIcon color="error" />
                             ) : (
-                                
-                            )} */}
+                                <FavoriteBorderIcon color="error" />
+                            )}
                         </IconButton>
 
-
                         <Link style={{ textDecoration: "none" }} to={`/listingsInfo/${item.id}`}>
-                            <img style={{ width: "181px", height: "181px", borderRadius: "30px" }}
-                                src={item.images} alt="" />
+                            <img src={item.images} />
                         </Link>
 
-                        <small style={{ fontSize: "13px", width: "100%", color: "black" }}>{item.title}</small><br />
-                        <small style={{ color: "grey" }}>${item.pricePerNight} for 2 night
-                            <ion-icon name="star"></ion-icon> {item.rating}</small>
-                    </div>
-
-
-
+                        <Typography variant="subtitle1" >
+                            {item.title.slice(0, 18)}
+                        </Typography><br />
+                        <Typography variant="caption" style={{ color: "grey", }}>
+                            ${item.pricePerNight} for 2 night
+                            <ion-icon name="star"></ion-icon> {item.rating}
+                        </Typography>
+                    </ Grid>
                 ))}
+            </Grid>
 
 
-            </div >
             <Footer />
         </>
     )

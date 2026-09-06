@@ -3,8 +3,8 @@ import { useMutation, useQuery } from "@apollo/client/react";
 import { useState } from "react";
 import { Grid, IconButton, Pagination, Typography } from "@mui/material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite'; // <-- 1. Izohdan chiqarildi
-import { Link } from "react-router"; // yoki "react-router-dom"
+import FavoriteIcon from '@mui/icons-material/Favorite'; 
+import { Link } from "react-router"; 
 import Footer from "./FooterSection";
 import Header from "./Header";
 import { Atom } from "react-loading-indicators";
@@ -45,17 +45,17 @@ const Listings = () => {
     const [category, setCategory] = useState(null)
 
     console.log(category);
-    
-    const [maxPrice, setMaxPrice] = useState(null)
+
+    const [maxPrice, setMaxPrice] = useState()
     const [minPrice, setMinPrice] = useState()
 
 
-    const [favorites, setFavorites] = useState([]);
+   
 
     const { data, loading, error } = useQuery(ListingQuery, {
         variables: {
             limit: 20, page: page, search: search, category: category,
-            maxPrice: Number(maxPrice)||null, minPrice: Number(minPrice)
+            maxPrice: maxPrice, minPrice: minPrice
         }
     });
 
@@ -63,21 +63,21 @@ const Listings = () => {
 
     const totalPages = data?.listings?.pagination?.totalPages || 1;
 
-
+ const [favorites, setFavorites] = useState([]);
     const handleFavoriteClick = (id) => {
-        setFavorites(prevFavorites =>
-            prevFavorites.includes(id)
-                ? prevFavorites.filter(item => item !== id)
-                : [...prevFavorites, id]
+        setFavorites(item =>
+            item.includes(id)
+                ? item.filter(item => item !== id)
+                : [...item, id]
         );
     };
 
 
     return (
         <>
-            <Header search={search} setSearch={setSearch}  category={category} 
-            setCategory={setCategory} maxPrice={maxPrice}   setMaxPrice={setMaxPrice} 
-             minPrice={minPrice}  setMinPrice={setMinPrice}/>
+            <Header search={search} setSearch={setSearch} category={category}
+                setCategory={setCategory} maxPrice={maxPrice} setMaxPrice={setMaxPrice}
+                minPrice={minPrice} setMinPrice={setMinPrice} />
 
             <Grid sx={{ xs: { maxWidth: "400px" } }} container spacing={1} className="listingSection">
                 {error && <p style={{ color: "red" }}>{error.message}</p>}
@@ -104,11 +104,7 @@ const Listings = () => {
                         </IconButton>
 
                         <Link style={{ textDecoration: "none" }} to={`/listingsInfo/${item.id}`}>
-                            <img
-
-                                src={item.images}
-
-                            />
+                            <img src={item.images} />
                         </Link>
 
                         <Typography variant="subtitle1" >
@@ -120,12 +116,11 @@ const Listings = () => {
                         </Typography>
                     </ Grid>
                 ))}
-            </Grid><br /><br /><br />
+            </Grid>
 
 
             <div className="paginationWrapper">
                 <Pagination
-
                     page={page}
                     count={totalPages}
                     showFirstButton

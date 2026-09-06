@@ -5,7 +5,8 @@ import Header from "./Header"
 import { useMutation, useQuery } from "@apollo/client/react"
 import { Link } from "react-router"
 import CloseIcon from '@mui/icons-material/Close';
-import { IconButton } from "@mui/material"
+import { Grid, IconButton, Typography } from "@mui/material"
+import { Atom } from "react-loading-indicators"
 
 
 const FavoritesPage = () => {
@@ -34,7 +35,7 @@ query Favorites {
     const [removeFavorite] = useMutation(RemoveQuery);
 
 
-    const { data, refetch } = useQuery(Favorites, {
+    const { data, refetch,error,loading } = useQuery(Favorites, {
         variables: {}
     })
     console.log(data?.favorite);
@@ -43,30 +44,38 @@ query Favorites {
     return (
         <>
             <Header />
-            <div className="listingSection">
+
+
+       <Grid sx={{ xs: { maxWidth: "400px" } }} container spacing={1} className="listingSection">
+                {error && <p style={{ color: "red" }}>{error.message}</p>}
+                {loading && <div className="loadingWrapper">
+                    <Atom color="#cc3131" size="large" text="" textColor="" />
+                </div>}
+
                 {data?.favorites?.map((item) => (
-                    <div className="card" key={item.id}>
-                        <IconButton className="removeFavoriiteIcon" onClick={() => {
+                    <Grid className="card" key={item.id}>
+                        
+                        <IconButton className="removeFavoriteIcon" onClick={() => {
                             removeFavorite({ variables: { listingId: item.id } });
                             refetch()
                         }}>
-                            <CloseIcon className="removeFavoriiteIcon" />
+                            <CloseIcon color="error" className="removeFavoriteIcon" />
                         </IconButton>
 
                         <Link style={{ textDecoration: "none" }} to={`/listingsInfo/${item.id}`}>
-                            <img style={{ width: "181px", height: "181px", borderRadius: "30px" }}
-                                src={item.images} alt="" />
+                            <img src={item.images}/>
                         </Link>
 
-                        <small style={{ fontSize: "13px", width: "100%", color: "black" }}>{item.title}</small><br />
-                        <small style={{ color: "grey" }}>${item.pricePerNight} for 2 night
-                            <ion-icon name="star"></ion-icon> {item.rating}</small>
-                    </div>
-                ))
-
-                }
-
-            </div><br /><br /><br />
+                        <Typography variant="subtitle1" >
+                            {item.title.slice(0, 18)}
+                        </Typography><br />
+                        <Typography variant="caption" style={{ color: "grey", }}>
+                            ${item.pricePerNight} for 2 night
+                            <ion-icon name="star"></ion-icon> {item.rating}
+                        </Typography>
+                    </ Grid>
+                ))}
+            </Grid>  <br /><br /><br />
             <Footer />
         </>
     )

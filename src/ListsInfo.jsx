@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/client/react";
 import { useParams } from "react-router";
 import Footer from "./FooterSection";
 import Header from "./Header";
-import { Button, IconButton, TextField } from "@mui/material";
+import { Button, IconButton, TextField, Typography } from "@mui/material";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useState } from "react";
@@ -66,7 +66,7 @@ const ListInfo = () => {
 
 
     const { control, handleSubmit } = useForm({
-        defaultValues: { chekIn: Date.now(), chekOut: "", guests: "1" }
+        defaultValues: { chekIn: new Date(), chekOut: "", guests: "1" }
     })
 
 
@@ -85,7 +85,9 @@ const ListInfo = () => {
                 <div className="infoHeader">
                     <h3>{room?.title}</h3>
                     <div style={{ display: "flex", alignItems: "center", fontSize: "20px" }}>
-                        <p ><ion-icon name="share-outline"></ion-icon> Share</p>
+                        <Typography className="share" variant="inherit" ><ion-icon name="share-outline"></ion-icon>
+                            <span>Share</span>
+                        </Typography >
 
                         <IconButton
                             style={{ color: "black", fontSize: "20px" }}
@@ -102,7 +104,7 @@ const ListInfo = () => {
                                 </>
                             ) : (
                                 <>
-                                    <FavoriteBorderIcon />
+                                    <FavoriteBorderIcon color="error" />
                                     <p>Save</p>
                                 </>
                             )}
@@ -114,12 +116,32 @@ const ListInfo = () => {
                 <img src={room?.images} />
 
                 <h3>Entire home in {room?.address}</h3>
-                <p style={{ fontWeight: "600", fontSize: "17px" }}> <ion-icon style={{ fontSize: "10px" }} name="star" className="starIcon"></ion-icon>
-                    {room?.rating} · {room?.reviewsCount}Reviws</p>
+
                 <p>{room?.guests} guests · {room?.bedrooms} bedroom ·
                     {room?.beds} bed · {room?.bathrooms}  private bath
                 </p>
 
+
+                <div className="statusWrapper">
+                    <p style={{ fontWeight: "600", fontSize: "17px" }}>
+                        {room?.rating}<br />
+                        <ion-icon style={{ fontSize: "10px" }} name="star" className="starIcon"></ion-icon>
+                    </p>
+
+                    <p>
+                        Guest <br />
+                        favorite
+                    </p>
+
+                    <p>{room?.reviewsCount}<br />
+                        Reviws
+                    </p>
+                </div>
+
+
+                <div className="listingDescription"><p style={{ marginTop: "20px" }}>
+                    {room?.description}</p>
+                </div>
                 <div className="Form">
                     <h3>Add dates for price</h3>
                     <div className="formHeader">
@@ -208,7 +230,7 @@ const ListInfo = () => {
                         />
                     </div>
 
-                    <Button variant="contained" color="error"
+                    <Button variant="contained" color="error" loading={loading}
                         onClick={handleSubmit(((val) => (
                             Mutation({
                                 variables: {
@@ -218,7 +240,7 @@ const ListInfo = () => {
                             })
                         )))} >Check availability</Button>
                 </div>
-                <p>{room?.description}</p>
+
             </div>
             <Footer />
         </>

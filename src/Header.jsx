@@ -4,13 +4,13 @@ import {
     InputLabel, MenuItem, Select, TextField
 } from "@mui/material";
 import { Link } from "react-router";
-import { useState } from 'react';
 import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client/react';
 import { useAuth } from "./UseAuth"
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router';
 import { useLogin } from './useLogin';
+import { max } from 'rxjs';
 
 const ListingHeader = gql`
              query ListingHeader($search:String ) {
@@ -29,8 +29,6 @@ const Header = ({ search, setSearch, category,
     setCategory, maxPrice, setMaxPrice,
     minPrice, setMinPrice }) => {
 
-
-    console.log(minPrice);
 
 
     const navigate = useNavigate()
@@ -51,14 +49,13 @@ const Header = ({ search, setSearch, category,
     const { data, } = useQuery(ListingHeader)
 
 
-    const a = []
-    console.log(a.length);
+
 
 
     const logOutBtn = () => {
         logOut()
         localStorage.clear()
-        console.log(accessToken);
+
         navigate("/login")
 
 
@@ -71,7 +68,8 @@ const Header = ({ search, setSearch, category,
                 <Link to="/"><img src={logo} className='logo' /></Link>
 
                 <div className='searchWrapper'>
-                    <input value={search} type="search" onChange={(e) => setSearch(e.target.value)} />
+                    <input value={search} type="search" placeholder='Search Apartments...'
+                        onChange={(e) => setSearch(e.target.value)} />
                     <button className="searchBtn">
                         <ion-icon name="search-outline"></ion-icon></button>
                 </div>
@@ -129,35 +127,19 @@ const Header = ({ search, setSearch, category,
 
 
                 <div className='filterWrapper'>
-                    {/* <FormControl className='categoryFilter'>
+
+
+                    <FormControl
+                        className='categoryFilter' >
                         <InputLabel id="demo-simple-select-label">Category</InputLabel>
                         <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={category}
-                            label="category"
-                            onChange={(e) => setCategory(e?.target?.value)}
+                            fullWidth
 
-                        >
-                            <MenuItem value={"APARTMENT"}>APARTMENT</MenuItem>
-                            <MenuItem value={"HOUSE"}>HOUSE</MenuItem>
-                            <MenuItem value={"VILLA"}>VILLA</MenuItem>
-                            <MenuItem value={"CABIN"}>CABIN</MenuItem>
-                            <MenuItem value={"HOTEL"}>HOTEL</MenuItem>
-
-
-                        </Select>
-                    </FormControl> */}
-
-
-                    <FormControl >
-                        <InputLabel id="demo-simple-select-label">Category</InputLabel>
-                        <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={category}
                             label="Category"
-                            onChange={(e) => setCategory(e?.target?.value)}
+                            onChange={(e) => setCategory(e.target.value)}
                         >
                             <MenuItem value={"APARTMENT"}>APARTMENT</MenuItem>
                             <MenuItem value={"HOUSE"}>HOUSE</MenuItem>
@@ -176,7 +158,7 @@ const Header = ({ search, setSearch, category,
                         size="small"
                         fullWidth
                         value={maxPrice}
-                        onChange={(e) => setMaxPrice(e.target.value)}
+                        onChange={(e) => setMaxPrice(Number(e.target.value))}
                         label="maxPrice"
 
                     />
@@ -187,11 +169,10 @@ const Header = ({ search, setSearch, category,
 
 
                     <TextField
-                        onChange={(e) => setMinPrice(e.target.value)}
                         className="PriceFilterInput"
+                        onChange={(e) => setMinPrice(Number(e.target.value))}
                         type="number"
                         placeholder="minPrice"
-
                         size="small"
                         value={minPrice}
                         fullWidth
@@ -202,7 +183,7 @@ const Header = ({ search, setSearch, category,
                 </div>
 
 
-                {/* <Button onClick={() => refetch()}>Refresh</Button> */}
+             
 
             </div>
         </>
